@@ -1,6 +1,6 @@
 trigger QuoteLineItemTrigger on QuoteLineItem (after update) {
-    if(isUpdate() && isAfter()){
-        QuoteLineItemTriggerHandler.syncCustomFields(Trigger.New);
+    if(Trigger.isUpdate && Trigger.isAfter){
+        QuoteLineItemTriggerHandler.identifyQuoteLineItemsToSync(Trigger.New);
     }
 
 }
