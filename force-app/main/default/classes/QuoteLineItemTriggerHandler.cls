@@ -25,7 +25,7 @@ public with sharing class QuoteLineItemTriggerHandler {
             }
         }
         if (!quoteLineItemsToSync.isEmpty()){ 
-            QuoteLineItemTriggerUtil.syncQLICustomFieldsToOLICustomFields(quoteLineItemsToSync);
+            LineItemSync.syncQLICustomFieldsToOLICustomFields(quoteLineItemsToSync);
         }
     }
 }
