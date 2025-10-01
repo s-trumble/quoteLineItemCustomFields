@@ -11,7 +11,7 @@ public with sharing class QuoteLineItemTriggerHandler {
         }
 
         Map<Id, Quote> quoteMap = new Map<Id, Quote>(
-            [SELECT Id, QuoteId, IsSyncing 
+            [SELECT Id, IsSyncing 
             FROM Quote 
             WHERE Id IN :quoteIds]);
         
