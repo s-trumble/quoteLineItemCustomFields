@@ -19,6 +19,16 @@ public with sharing class LineItemSync {
         }
     }
 
+    /**
+     * Public method to retrieve the names of custom fields shared between QLI and OLI.
+     * This is used by trigger handlers to ensure all necessary fields are queried.
+     */
+    public static Set<String> getSharedCustomFields() {
+        initSharedFields();
+        // Return a copy of the set to prevent external modification
+        return sharedCustomFields != null ? new Set<String>(sharedCustomFields) : new Set<String>();
+    }
+
     public static void syncQLICustomFieldsToOLICustomFields(List<QuoteLineItem> quoteLineItems){
         initSharedFields();
         

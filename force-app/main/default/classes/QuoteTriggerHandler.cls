@@ -14,12 +14,27 @@ public with sharing class QuoteTriggerHandler {
                 quoteIds.add(q.Id);
                 }
         }
+        
+        // --- FIX START: Query the custom fields dynamically ---
+        if (quoteIds.isEmpty()) {
+            return;
+        }
 
-        Map<Id, QuoteLineItem> qliMap = new Map<Id, QuoteLineItem>(
-            [SELECT Id, OpportunityLineItemId, QuoteId
-            FROM QuoteLineItem
-            WHERE QuoteId IN :quoteIds]
-        );
+        // 1. Get the shared custom fields
+        Set<String> customFieldsToQuery = LineItemSync.getSharedCustomFields();
+        
+        // 2. Add required standard fields
+        List<String> fieldsToQueryList = new List<String>{'Id', 'OpportunityLineItemId', 'QuoteId'};
+        fieldsToQueryList.addAll(customFieldsToQuery);
+        String fieldsToQuery = String.join(fieldsToQueryList, ',');
+        
+        // 3. Build and execute dynamic SOQL query
+        String query = 'SELECT ' + fieldsToQuery + ' FROM QuoteLineItem WHERE QuoteId IN :quoteIds';
+        
+        List<QuoteLineItem> queriedQlis = Database.query(query);
+
+        Map<Id, QuoteLineItem> qliMap = new Map<Id, QuoteLineItem>(queriedQlis);
+        // --- FIX END ---
 
         quoteLineItemsToSync.addAll(qliMap.values());
     
