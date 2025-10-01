@@ -51,14 +51,26 @@ public with sharing class LineItemSync {
             OpportunityLineItem oli = oliMap.get(oliId);
             QuoteLineItem qli = qlisWithOli.get(oliId);
             
+            Boolean fieldsChanged = false; // Add a flag to track changes
+
             // Check for existence
             if (oli != null && qli != null) {
-                // Typo corrected: consistent variable name `fieldName`
+                
                 for (String fieldName : sharedCustomFields){ 
-                    // Use SObject.get() and SObject.put() for dynamic access
-                    oli.put(fieldName, qli.get(fieldName));
+                    Object qliValue = qli.get(fieldName);
+                    Object oliValue = oli.get(fieldName);
+                    
+                    // Only perform a put operation if the value is different
+                    if (qliValue != oliValue) { 
+                        oli.put(fieldName, qliValue);
+                        fieldsChanged = true;
+                    }
                 }
-                olisToUpdate.add(oli);
+                
+                // Only add the OLI to the update list if at least one field changed
+                if (fieldsChanged) {
+                    olisToUpdate.add(oli);
+                }
             }
         }
         
