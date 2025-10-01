@@ -1,7 +1,7 @@
 public with sharing class LineItemSync {
     private static Set<String> sharedCustomFields;
     
-    // Private static method to initialize sharedCustomFields - this is fine
+    // Private static method to initialize sharedCustomFields
     private static void initSharedFields(){
         if(sharedCustomFields != null){
             return;
@@ -85,13 +85,10 @@ public with sharing class LineItemSync {
         }
         
         if(!olisToUpdate.isEmpty()){
-            // DML operation should be wrapped in a try/catch block for robust error handling
             try {
                 update olisToUpdate;
             } catch (DmlException e) {
-                // Log the error or handle it as appropriate for your application
                 System.debug(LoggingLevel.ERROR, 'Failed to update OLIs: ' + e.getMessage());
-                // Consider adding an error to the Quote Line Item for the user to see
             }
         }
     }

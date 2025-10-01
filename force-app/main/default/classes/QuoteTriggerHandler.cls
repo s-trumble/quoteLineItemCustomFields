@@ -15,7 +15,6 @@ public with sharing class QuoteTriggerHandler {
                 }
         }
         
-        // --- FIX START: Query the custom fields dynamically ---
         if (quoteIds.isEmpty()) {
             return;
         }
@@ -34,7 +33,6 @@ public with sharing class QuoteTriggerHandler {
         List<QuoteLineItem> queriedQlis = Database.query(query);
 
         Map<Id, QuoteLineItem> qliMap = new Map<Id, QuoteLineItem>(queriedQlis);
-        // --- FIX END ---
 
         quoteLineItemsToSync.addAll(qliMap.values());
     

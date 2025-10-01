@@ -14,8 +14,6 @@ public with sharing class QuoteLineItemTriggerHandler {
             FROM Quote 
             WHERE Id IN :quoteIds]);
         
-        
-        // --- START: New logic to query all fields for syncing QLIs ---
         List<QuoteLineItem> qlisToRequery = new List<QuoteLineItem>();
         Set<Id> qliIdsToRequery = new Set<Id>();
         
@@ -49,8 +47,6 @@ public with sharing class QuoteLineItemTriggerHandler {
             
             quoteLineItemsToSync = Database.query(query);
         }
-        // --- END: New logic ---
-
 
         if (!quoteLineItemsToSync.isEmpty()){ 
             LineItemSync.syncQLICustomFieldsToOLICustomFields(quoteLineItemsToSync);
