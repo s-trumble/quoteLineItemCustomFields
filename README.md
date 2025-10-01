@@ -1,18 +1,6 @@
 # Salesforce DX Project: Next Steps
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+This project maps values in custom fields on QuoteLineItem to custom fields on OpportunityLineItem when they share the same API name and the parent quote is syncing. 
+E.g. QuoteLineItem.My_custom_field__c will map to OpportunityLineItem.My_custom_field__c, but QuoteLineItem.My_custom_field__c will NOT map to OpportunityLineItem.Your_custom_field__c as the field's have different API names. 
 
-## How Do You Plan to Deploy Your Changes?
-
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+It is expected that your custom fields have the same data type or could accept the values from QuoteLineItem field into the OpportunityLineItem field. 
