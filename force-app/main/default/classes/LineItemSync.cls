@@ -14,7 +14,12 @@ public with sharing class LineItemSync {
         for(String fieldName : qliFields.keySet()){
             // Check for custom fields AND that they exist on OLI
             if(fieldName.endsWith('__c') && oliFields.containsKey(fieldName)){
-                sharedCustomFields.add(fieldName);
+                // Get field describe from OLI side (since that's where we'll be updating)
+                Schema.DescribeFieldResult oliFieldDescribe = oliFields.get(fieldName).getDescribe();
+                //exclude formula fields and other non-updateable fields
+                if (oliFieldDescribe.isUpdateable()) {
+                    sharedCustomFields.add(fieldName);
+                }
             }
         }
     }
